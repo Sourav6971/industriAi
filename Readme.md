@@ -81,11 +81,9 @@ The following flowchart illustrates the steps in the platform's workflow:
 4. **ROI Prediction**: A model predicts the return on investment (ROI) for each project, considering factors like financial health, market trends, and past project performance.
 5. **Investment Optimization**: Linear Programming (LP) and Mixed-Integer Programming (MIP) are applied to optimize investments across different projects, aiming to maximize ESG impact while respecting constraints like budget and risk.
 
-## Usage
+## UI
 
-Once the platform is running, users can upload project reports (in PDF format) to evaluate their ESG impact, predict ROI, and see investment optimization results. The system uses NLP to extract relevant information from the reports and then applies logistic regression for ESG and ROI prediction.
-
-Below is an example of the platform's user interface:
+Below is our Website Dashboard
 
 ![Platform UI](images/dashboard.jpg)
 
