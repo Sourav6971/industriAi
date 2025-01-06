@@ -45,11 +45,9 @@ class ESGPredictor:
             # Interpret ESG values
             esg_interpretation = self._interpret_esg_values(feature_scores, text.lower())
             
+            # Return only ESG scores (no interpretation, no details)
             return {
-                'cluster': int(cluster),
-                'esg_scores': esg_interpretation['scores'],
-                'interpretation': esg_interpretation['interpretation'],
-                'details': esg_interpretation['details']
+                'esg_scores': esg_interpretation['scores']
             }
         
         except Exception as e:
@@ -77,17 +75,15 @@ class ESGPredictor:
         }
 
         scores = {category: 0 for category in esg_keywords.keys()}
-        details = {category: {'matched_keywords': []} for category in esg_keywords.keys()}
         
         weights = {
             'high_impact': 1.5,
-            'medium_impact': 0.9,
+            'medium_impact': 1.0,
             'low_impact': 0.5
         }
         
         for category, impact_groups in esg_keywords.items():
             category_score = 0
-            matched_keywords = []
             
             for impact_level, keywords in impact_groups.items():
                 for keyword in keywords:
@@ -101,10 +97,8 @@ class ESGPredictor:
                     if tfidf_score > 0 or keyword_count > 0:
                         keyword_score = (tfidf_score * 0.6 + min(keyword_count, 3) * 0.4) * weights[impact_level]
                         category_score += keyword_score
-                        matched_keywords.append(f"{keyword} ({impact_level})")
             
             scores[category] = max(category_score, 1e-2)
-            details[category]['matched_keywords'] = matched_keywords
         
         total_weight = sum(weights.values()) * 4
         scores = {
@@ -113,28 +107,8 @@ class ESGPredictor:
         }
         
         return {
-            'scores': scores,
-            'interpretation': self._generate_interpretation(scores),
-            'details': details
+            'scores': scores
         }
-
-    def _generate_interpretation(self, scores):
-        levels = {
-            (80, 100): "Very Strong",
-            (60, 80): "Strong",
-            (40, 60): "Moderate",
-            (20, 40): "Developing",
-            (0, 20): "Limited"
-        }
-        
-        interpretations = []
-        for category, score in scores.items():
-            for (lower, upper), level in levels.items():
-                if lower <= score <= upper:
-                    interpretations.append(f"{level} {category.title()} performance ({score:.1f}%)")
-                    break
-        
-        return " | ".join(interpretations)
 
 def extract_text_from_pdf(file_path):
     """Extract text content from a PDF file"""
