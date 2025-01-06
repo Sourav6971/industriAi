@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Header from "./Header";
+import Company from "./Company";
 import ImpactCard from "./ImpactCard";
 import ChartSection from "./ChartSection";
 
@@ -53,7 +53,7 @@ const Dashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, type: "spring" }}
       >
-        <Header />
+        <Company />
       </motion.div>
 
       {/* Impact Cards */}
