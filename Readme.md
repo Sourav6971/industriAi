@@ -87,12 +87,6 @@ Below is our Website Dashboard
 
 ![Platform UI](images/dashboard.jpg)
 
-## Contributors
-
-- [Rahul Kumar](https://github.com/rahulkr3201)
-- [Contributor 1 Name](https://github.com/contributor1)
-- [Contributor 2 Name](https://github.com/contributor2)
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
